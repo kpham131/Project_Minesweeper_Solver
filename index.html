@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="app.css"></link>
+</head>
+<body>
+    <div class="grid"></div>
+    <button id="reset">Reset</button>
+    <!-- <select name="preset" id="pre-set">
+        <option value="none">-- Select a preset --</option>
+        <option value="beginner">Beginner 10x10 (10 bombs)</option>
+        <option value="intermediate">Intermediate 16x16 (40 bombs)</option>
+        <option value="expert">Expert 16x30 (99 bombs)</option>
+    </select> -->
+    <div>
+        <div>
+            <input type="radio" id="beginner" name="grid-option" value="beginner" checked>
+            <label for="beginner">Beginner 10x10 (10 bombs)</label>    
+        </div>
+        <div>
+            <input type="radio" id="intermediate" name="grid-option" value="intermediate">
+            <label for="intermediate">Intermediate 16x16 (40 bombs)</label>    
+        </div>
+        <div>
+            <input type="radio" id="expert" name="grid-option" value="expert">
+            <label for="expert">Expert 16x30 (99 bombs)</label>    
+        </div>
+        <div>
+            <input type="radio" id="custom" name="grid-option" value="custome">
+            <label for="custom">
+                Custom
+                <div id="customInput" >
+                    <input type="text" name="custom" placeholder="height" id="height">
+                    <input type="text" name="custom" placeholder="width" id="width">
+                    <input type="text" name="custom" placeholder="Number of Bombs" id="bombInput">    
+                </div>
+            </label>    
+        </div>    
+    </div>
+
+
+    
+    <script src="Minesweeper.js"></script>
+
+</body>
+</html>
