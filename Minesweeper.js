@@ -39,10 +39,6 @@ function timeCounter(){
     },1000)
 }
 
-
-
-
-
 // show and hide custom button
 document.querySelector('#customInput').style.display = 'none';
 function showCustom(){
@@ -85,12 +81,15 @@ function gridChoosing(){
         heightInput.addEventListener('input', function(e){
             height = parseInt(heightInput.value);
         })
+        height = parseInt(heightInput.value);
         widthInput.addEventListener('input', function(e){
             width = parseInt(widthInput.value);
         })
+        width = parseInt(widthInput.value);
         bombAmountInput.addEventListener('input', function(e){
             bombAmount = parseInt(bombAmountInput.value);
         })
+        bombAmount = parseInt(bombAmountInput.value);
     }
     
 }
