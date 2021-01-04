@@ -196,7 +196,8 @@ function click(cell){
     if (isGameOver) return;
     if (cell.revealed===true || cell.flagged===true) return;
 
-    clicked++;
+    
+    // start time on the first click
     if (clicked===1){
         timeCounter();
     }
@@ -206,6 +207,7 @@ function click(cell){
         gameOver(false);
     }
     else {
+        clicked++;
         if (cell.numBombs!=0){
             showCell(cell);
             
