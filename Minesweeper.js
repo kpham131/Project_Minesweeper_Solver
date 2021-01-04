@@ -19,6 +19,7 @@ let bombCounter = 10;
 let time=0;
 
 
+
 class Cell{
     constructor(status,row,col){
         this.status = status;
@@ -28,8 +29,24 @@ class Cell{
         this.flagged = false;
         this.display = document.createElement('div');
         this.numBombs = 0;
+        this.available = 8;
     }
 }
+
+function isLeftCell(cell){
+    return cell.col === 0;
+}
+function isRightCell(cell){
+    return cell.col === width-1;
+}
+function isTopCell(cell){
+    return cell.row === 0;
+}
+function isBottomCell(cell){
+    return cell.row === height-1; 
+}
+
+
 
 let timeCounterId;
 function timeCounter(){
@@ -196,16 +213,15 @@ function click(cell){
     if (isGameOver) return;
     if (cell.revealed===true || cell.flagged===true) return;
 
-    
     // start time on the first click
     if (clicked===1){
         timeCounter();
     }
     
-
     if (cell.status==='bomb'){
         gameOver(false);
     }
+
     else {
         clicked++;
         if (cell.numBombs!=0){
@@ -221,8 +237,7 @@ function click(cell){
     }
     if (clicked === width*height - bombAmount){
         gameOver(true)
-    }
-    
+    }  
 }
 
 function showCell(cell){
@@ -235,39 +250,55 @@ function showCell(cell){
 function checkCell(cell){
     setTimeout(()=> {        
         // check the right cell
-        if (cell.col<width-1){
+        if (!isRightCell(cell)){
             click(board[cell.row][cell.col+1]);
         }
         //  check the bottom right cell
-        if (cell.col<width-1 && cell.row<height-1){
+        if (!isRightCell(cell) && !isBottomCell(cell)){
             click(board[cell.row+1][cell.col+1]);
         }
         // check the bottom cell
-        if (cell.row<height-1){
+        if (!isBottomCell(cell)){
             click(board[cell.row+1][cell.col]);
         }
         //  check the bottom left cell
-        if (cell.row<height-1 && cell.col>0){
+        if (!isBottomCell(cell) && !isLeftCell(cell)){
             click(board[cell.row+1][cell.col-1]);
         }
         // check the left cell
-        if (cell.col>0){
+        if (!isLeftCell(cell)){
             click(board[cell.row][cell.col-1]);
         }
         //  check the top left cell
-        if (cell.row>0 && cell.col>0){
+        if (!isTopCell(cell) && !isLeftCell(cell)){
             click(board[cell.row-1][cell.col-1]);
         }
         //  check the top right cell
-        if (cell.row>0 && cell.col<width-1){
+        if (!isTopCell(cell) && !isRightCell(cell)){
             click(board[cell.row-1][cell.col+1]);
         }
         // check the top cell
-        if (cell.row>0){
+        if (!isTopCell(cell)){
             click(board[cell.row-1][cell.col]);
         }
     },10) 
 }
+
+
+
+function solve(){
+
+}
+
+
+
+
+
+
+
+
+
+
 
 function gameOver(win){
     clearInterval(timeCounterId);
