@@ -17,4 +17,9 @@
     background-color: greenyellow;
 }
 
-
+#timer {
+    margin-left: 200px;
+}
+#reset {
+    margin-top: 10px;
+}
