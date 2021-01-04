@@ -8,6 +8,7 @@
 
 .grid div {
     -webkit-user-select: none;
+    -webkit-touch-callout: none;
     box-sizing: border-box;
     height: 40px;
     width: 40px;
