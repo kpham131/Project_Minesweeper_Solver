@@ -81,6 +81,7 @@ function gridChoosing(){
         heightInput.addEventListener('input', function(e){
             height = parseInt(heightInput.value);
         })
+        // do this in case user enter input first and the click radio
         height = parseInt(heightInput.value);
         widthInput.addEventListener('input', function(e){
             width = parseInt(widthInput.value);
