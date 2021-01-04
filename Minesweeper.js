@@ -5,6 +5,8 @@ const heightInput = document.getElementById('height');
 const widthInput = document.getElementById('width');
 const bombAmountInput = document.getElementById('bombInput');
 const gridOption = document.getElementsByName('grid-option');
+const bombCounterDisplay = document.querySelector('#bombCounter');
+const timeDisplay = document.querySelector('#time');
 
 // game components
 let bombAmount= 10;
@@ -12,7 +14,9 @@ let height = 10;
 let width = 10;
 let board = [];
 let isGameOver= false;
-
+let clicked =0;
+let bombCounter = 10;
+let time=0;
 
 
 class Cell{
@@ -26,6 +30,18 @@ class Cell{
         this.numBombs = 0;
     }
 }
+
+let timeCounterId;
+function timeCounter(){
+    timeCounterId = setInterval(()=>{
+        time++;
+        timeDisplay.innerHTML = time;
+    },1000)
+}
+
+
+
+
 
 // show and hide custom button
 document.querySelector('#customInput').style.display = 'none';
@@ -69,22 +85,21 @@ function gridChoosing(){
         heightInput.addEventListener('input', function(e){
             height = parseInt(heightInput.value);
         })
-        // do this in case user enter input first and the click radio
-        height = parseInt(heightInput.value);
         widthInput.addEventListener('input', function(e){
             width = parseInt(widthInput.value);
         })
-        width = parseInt(widthInput.value);
         bombAmountInput.addEventListener('input', function(e){
             bombAmount = parseInt(bombAmountInput.value);
         })
-        bombAmount = parseInt(bombAmountInput.value);
     }
+    
 }
 
 // create Board
 function makeBoard(){   
     gridChoosing();
+    bombCounter=bombAmount;
+    bombCounterDisplay.innerHTML = bombCounter;
     // setting up the grid
     grid.style.height = `${height*40}px`;
     grid.style.width = `${width*40}px`;
@@ -93,7 +108,7 @@ function makeBoard(){
     // making an array with mixing bombs and blank
     let id = 0;
     let bombsArray = Array(bombAmount).fill('bomb');
-    let emptyArray = Array(width*width - bombAmount).fill('valid');
+    let emptyArray = Array(width*height - bombAmount).fill('valid');
     const gameArray = emptyArray.concat(bombsArray);
     const shuffleArray = gameArray.sort(()=> Math.random() -0.5);
     
@@ -160,13 +175,14 @@ function addFlag(cell){
     if (cell.revealed===false){
         cell.flagged = !cell.flagged;
         if (cell.flagged===true){
+            bombCounterDisplay.innerHTML = --bombCounter;
             cell.display.innerHTML = '🚩';
         }
         else{
+            bombCounterDisplay.innerHTML = ++bombCounter;
             cell.display.innerHTML = '';
         }
-    }
-    
+    } 
 }
 
 
@@ -176,20 +192,29 @@ function click(cell){
     if (isGameOver) return;
     if (cell.revealed===true || cell.flagged===true) return;
 
+    clicked++;
+    if (clicked===1){
+        timeCounter();
+    }
+    
 
     if (cell.status==='bomb'){
-        gameOver();
-        return;
+        gameOver(false);
     }
     else {
         if (cell.numBombs!=0){
             showCell(cell);
-            return;
+            
         }
-        // not neccessary
-        checkCell(cell)
-        cell.revealed=true;
-        cell.display.classList.add('checked');
+        else{
+            // not neccessary
+            checkCell(cell)
+            cell.revealed=true;
+            cell.display.classList.add('checked');
+        }
+    }
+    if (clicked === width*height - bombAmount){
+        gameOver(true)
     }
     
 }
@@ -235,17 +260,24 @@ function checkCell(cell){
         if (cell.row>0){
             click(board[cell.row-1][cell.col]);
         }
-    }, 15) 
+    },10) 
 }
 
-function gameOver(){
-    // reveal the bombs (unhide the cover)
-    isGameOver= true;
-    let bombCells = document.querySelectorAll('.bomb');
-    for(let bombCell of bombCells){
-        bombCell.innerHTML = '💣';
-        bombCell.style.background = 'orange';
+function gameOver(win){
+    clearInterval(timeCounterId);
+    if (win){
+        alert('YOU WON!!')
     }
+    // reveal the bombs (unhide the cover)
+    else{
+        let bombCells = document.querySelectorAll('.bomb');
+        for(let bombCell of bombCells){
+            bombCell.innerHTML = '💣';
+            bombCell.style.background = 'orange';
+        }
+    }
+    isGameOver = true;
+    
 }
 
 resetButton.addEventListener('click', function(){
@@ -258,7 +290,12 @@ function reset(){
     for (let chim of cells){
         chim.remove();
     }
+    bombCounter = 0;
     board=[];
     makeBoard();
+    clicked = 0; 
+    time=0;
+    timeDisplay.innerHTML=0;
 }
+
 makeBoard();
