@@ -610,10 +610,6 @@ function solveNext(cell) {
     else {
         click(cell);
     }
-
-
-
-
 }
 
 // check neighbor cell when click the 0 cell
@@ -678,9 +674,9 @@ function gameOver(win, cellClicked) {
         let bombCells = document.querySelectorAll('.bomb');
         for (let bombCell of bombCells) {
             console.log(bombCell);
-            bombCell.src = "img/bomb.png";
+            bombCell.src = "img/bomb.jpg";
         }
-        cellClicked.display.src= "img/exploded.png"
+        cellClicked.display.src= "img/exploded.jpg"
     }
     isGameOver = true;
 
