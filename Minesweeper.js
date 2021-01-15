@@ -668,8 +668,9 @@ function checkCell(cell) {
 
 function gameOver(win, cellClicked) {
     clearInterval(timeCounterId);
+    
     if (win) {
-        alert('YOU WON!!');
+        console.log('YOU WON!!');
     }
     // reveal the bombs (unhide the cover)
     else {
