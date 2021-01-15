@@ -36,7 +36,8 @@ class Cell {
         this.col = col;
         this.revealed = false;
         this.flagged = false;
-        this.display = document.createElement('div');
+        this.display = document.createElement('img');
+        this.display.src = 'img/facingDown.png';
         this.numBombs = 0;
         this.numFlagged = 0;
         this.solved = false;
@@ -406,12 +407,9 @@ function addFlag(cell) {
         else {
             cell.flagged = true;
             bombCounterDisplay.innerHTML = --bombCounter;
-            cell.display.innerHTML = '🚩';
-
+            cell.display.src = "img/flagged.png";
             cell.updateFlagged();
             solveSurroundCells(cell);
-
-
         }
 
     }
@@ -433,7 +431,7 @@ function solveSurroundCells(cell) {
 function removeFlag(cell) {
     cell.flagged = false;
     bombCounterDisplay.innerHTML = ++bombCounter;
-    cell.display.innerHTML = '';
+    cell.display.src = "img/facingDown.png";
 }
 
 
@@ -499,7 +497,7 @@ function click(cell) {
 
     // game over when click the bomb
     if (cell.status === 'bomb') {
-        gameOver(false);
+        gameOver(false, cell);
     }
 
     else {
@@ -525,10 +523,9 @@ function click(cell) {
                 if (clicked === 1) {
                     timeCounter();
                 }
-                cell.revealed = true;
-                cell.display.classList.add('checked');
+                showCell(cell);
                 cell.updateAvailability();
-                checkCell(cell);
+                return checkCell(cell);
 
             }
 
@@ -539,7 +536,7 @@ function click(cell) {
     }
 
     if (clicked === width * height - bombAmount) {
-        gameOver(true)
+        gameOver(true, cell)
     }
 }
 
@@ -562,13 +559,39 @@ function setSolved(cell) {
         }
 
     }
-
 }
 
 function showCell(cell) {
-    cell.display.innerHTML = cell.numBombs;
     cell.revealed = true;
-    cell.display.classList.add('checked');
+    
+    if (cell.numBombs===0){
+        cell.display.src = "img/0.png";
+    }
+    else if (cell.numBombs===1){
+        cell.display.src = "img/1.png";
+    }
+    else if (cell.numBombs===2){
+        cell.display.src = "img/2.png";
+    }
+    else if (cell.numBombs===3){
+        cell.display.src = "img/3.png";
+    }
+    else if (cell.numBombs===4){
+        cell.display.src = "img/4.png";
+    }
+    else if (cell.numBombs===5){
+        cell.display.src = "img/5.png";
+    }
+    else if (cell.numBombs===6){
+        cell.display.src = "img/6.png";
+    }
+    else if (cell.numBombs===7){
+        cell.display.src = "img/7.png";
+    }
+    else {
+        cell.display.src = "img/8.png";
+    }
+    
 }
 
 
@@ -634,47 +657,6 @@ function checkCell(cell) {
 }
 
 
-// const checkCell = (cell) => {
-//     return new Promise((resolve, reject) =>{
-//         setTimeout(() => {
-//             // check the right cell
-//             if (!cell.isRightCell()) {
-//                 solveNext(cell.rightCell());
-//             }
-//             //  check the bottom right cell
-//             if (!cell.isRightCell() && !cell.isBottomCell()) {
-//                 solveNext(cell.bottomRightCell());
-//             }
-//             // check the bottom cell
-//             if (!cell.isBottomCell()) {
-//                 solveNext(cell.bottomCell());
-//             }
-//             //  check the bottom left cell
-//             if (!cell.isBottomCell() && !cell.isLeftCell()) {
-//                 solveNext(cell.bottomLeftCell());
-//             }
-//             // check the left cell
-//             if (!cell.isLeftCell()) {
-//                 solveNext(cell.leftCell());
-//             }
-//             //  check the top left cell
-//             if (!cell.isTopCell() && !cell.isLeftCell()) {
-//                 solveNext(cell.topLeftCell());
-//             }
-//             //  check the top right cell
-//             if (!cell.isTopCell() && !cell.isRightCell()) {
-//                 solveNext(cell.topRightCell());
-//             }
-//             // check the top cell
-//             if (!cell.isTopCell()) {
-//                 solveNext(cell.topCell());
-//             }
-//             resolve();
-
-//         }, 15)
-//     })
-
-// }
 
 
 
@@ -686,7 +668,7 @@ function checkCell(cell) {
 
 
 
-function gameOver(win) {
+function gameOver(win, cellClicked) {
     clearInterval(timeCounterId);
     if (win) {
         console.log('YOU WON!!');
@@ -695,9 +677,10 @@ function gameOver(win) {
     else {
         let bombCells = document.querySelectorAll('.bomb');
         for (let bombCell of bombCells) {
-            bombCell.innerHTML = '💣';
-            bombCell.style.background = 'orange';
+            console.log(bombCell);
+            bombCell.src = "img/bomb.png";
         }
+        cellClicked.display.src= "img/exploded.png"
     }
     isGameOver = true;
 
@@ -709,7 +692,7 @@ resetButton.addEventListener('click', function () {
 
 function reset() {
     isGameOver = false;
-    const cells = document.querySelectorAll('.grid div');
+    const cells = document.querySelectorAll('.grid img');
     for (let chim of cells) {
         chim.remove();
     }

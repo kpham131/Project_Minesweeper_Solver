@@ -6,7 +6,7 @@
     background-color: grey;
 }
 
-.grid div {
+.grid img {
     user-select: none;
     box-sizing: border-box;
     height: 40px;
