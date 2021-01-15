@@ -675,7 +675,6 @@ function gameOver(win, cellClicked) {
     else {
         let bombCells = document.querySelectorAll('.bomb');
         for (let bombCell of bombCells) {
-            console.log(bombCell);
             bombCell.src = "img/bomb.jpg";
         }
         cellClicked.display.src= "img/exploded.jpg"
