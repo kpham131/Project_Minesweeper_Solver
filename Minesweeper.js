@@ -504,6 +504,7 @@ function click(cell) {
         if (cell.numBombs != 0) {
             if (!cell.revealed) {
                 clicked++;
+                
                 // start time on the first click
                 if (clicked === 1) {
                     timeCounter();
@@ -520,6 +521,7 @@ function click(cell) {
             if (!cell.revealed) {
                 // start time on the first click
                 clicked++;
+                
                 if (clicked === 1) {
                     timeCounter();
                 }
@@ -667,7 +669,7 @@ function checkCell(cell) {
 function gameOver(win, cellClicked) {
     clearInterval(timeCounterId);
     if (win) {
-        alrt('YOU WON!!');
+        alert('YOU WON!!');
     }
     // reveal the bombs (unhide the cover)
     else {
