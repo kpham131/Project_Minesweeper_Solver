@@ -499,11 +499,12 @@ function click(cell) {
     if (cell.status === 'bomb') {
         gameOver(false, cell);
     }
-
+    
     else {
+        clicked++;
         if (cell.numBombs != 0) {
             if (!cell.revealed) {
-                clicked++;
+                // clicked++;
                 
                 // start time on the first click
                 if (clicked === 1) {
@@ -520,7 +521,7 @@ function click(cell) {
         else {
             if (!cell.revealed) {
                 // start time on the first click
-                clicked++;
+                // clicked++;
                 
                 if (clicked === 1) {
                     timeCounter();
@@ -536,9 +537,8 @@ function click(cell) {
 
 
     }
-
-    if (clicked === width * height - bombAmount) {
-        gameOver(true, cell)
+    if (clicked === width * height - bombAmount && !isGameOver) {
+        gameOver(true, cell);
     }
 }
 
@@ -661,16 +661,14 @@ function checkCell(cell) {
 
 
 
-
-
-
-
-
 function gameOver(win, cellClicked) {
     clearInterval(timeCounterId);
     
     if (win) {
-        console.log('YOU WON!!');
+        setTimeout(()=>{
+            alert('YOU WON!!');
+        },15)
+        
     }
     // reveal the bombs (unhide the cover)
     else {
