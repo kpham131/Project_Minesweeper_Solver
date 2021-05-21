@@ -222,7 +222,7 @@ class Cell {
 
 
 
-
+// time counter function
 let timeCounterId;
 function timeCounter() {
     timeCounterId = setInterval(() => {
