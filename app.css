@@ -25,8 +25,11 @@
   display: flex;
 }
 
-.column {
-  flex: 50%;
+.column1 {
+  flex: 30%;
+}
+.column2 {
+  flex: 70%;
 }
 
 li {
