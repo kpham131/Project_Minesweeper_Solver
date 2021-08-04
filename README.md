@@ -1,4 +1,4 @@
-Game Link: https://kpham131.github.io/mineSweeper/
+Game Link: https://kpham131.github.io/Project_Minesweeper_Solver/
 
 This is a project that allows the user to play minesweeper in a
 classic way with an extra feature which solves the game
